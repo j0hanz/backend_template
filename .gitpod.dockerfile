@@ -15,19 +15,19 @@ RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh |
         && nvm use $NODE_VERSION \
         && nvm alias default $NODE_VERSION \
         && npm install -g typescript yarn node-gyp" \
-    && echo ". ~/.nvm/nvm.sh"  >> /home/gitpod/.bashrc.d/50-node
+    && echo ". ~/.nvm/nvm.sh" >> /home/gitpod/.bashrc.d/50-node
 ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
 
 ### Python ###
 USER gitpod
-RUN sudo install-packages python3-pip
-
+RUN sudo apt-get install -y python3-pip
 ENV PYTHON_VERSION=3.12.2
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
-    && { echo; \
-        echo 'eval "$(pyenv init -)"'; \
-        echo 'eval "$(pyenv virtualenv-init -)"'; } >> /home/gitpod/.bashrc.d/60-python \
+    && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc \
+    && echo 'eval "$(pyenv init --path)"' >> ~/.bashrc \
+    && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
+    && echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc.d/60-python \
     && pyenv update \
     && pyenv install $PYTHON_VERSION \
     && pyenv global $PYTHON_VERSION \
@@ -81,5 +81,5 @@ ENV IP="0.0.0.0"
 # Despite the scary name, this is just to allow React and DRF to run together on Gitpod
 ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
 
-# Update and upgrade at the end
+# Final update and upgrade
 RUN sudo apt-get update -y && sudo apt-get upgrade -y

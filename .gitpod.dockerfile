@@ -1,5 +1,8 @@
 FROM gitpod/workspace-base
 
+# Update and upgrade at the beginning
+RUN sudo apt-get update -y && sudo apt-get upgrade -y
+
 RUN echo "CI version from base"
 
 ### NodeJS ###
@@ -19,6 +22,7 @@ ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
 USER gitpod
 RUN sudo install-packages python3-pip
 
+ENV PYTHON_VERSION=3.12.2
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
     && { echo; \
@@ -76,3 +80,6 @@ ENV IP="0.0.0.0"
 
 # Despite the scary name, this is just to allow React and DRF to run together on Gitpod
 ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
+
+# Update and upgrade at the end
+RUN sudo apt-get update -y && sudo apt-get upgrade -y

@@ -18,7 +18,6 @@ ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
 ### Python ###
 USER gitpod
 RUN sudo install-packages python3-pip
-ENV PYTHON_VERSION 3.12.2
 
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
@@ -33,7 +32,7 @@ RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-ins
         setuptools wheel virtualenv pipenv pylint rope flake8 \
         mypy autopep8 pep8 pylama pydocstyle bandit notebook \
         twine \
-    && sudo rm -rf /tmp/*USER gitpod
+    && sudo rm -rf /tmp/*
 ENV PYTHONUSERBASE=/workspace/.pip-modules \
     PIP_USER=yes
 ENV PATH=$PYTHONUSERBASE/bin:$PATH
@@ -41,9 +40,7 @@ ENV PATH=$PYTHONUSERBASE/bin:$PATH
 # Setup Heroku CLI
 RUN curl https://cli-assets.heroku.com/install.sh | sh
 
-
 # Setup PostgreSQL
-
 RUN sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list' && \
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
     sudo apt-get update -y && \
@@ -62,9 +59,7 @@ ENV PGDATABASE="postgres"
 
 ENV PATH="/usr/lib/postgresql/12/bin:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin:$HOME/.pg_ctl/bin:$PATH"
 
-
 # Add aliases
-
 RUN echo 'alias run="python3 $GITPOD_REPO_ROOT/manage.py runserver 0.0.0.0:8000"' >> ~/.bashrc && \
     echo 'alias heroku_config=". $GITPOD_REPO_ROOT/.vscode/heroku_config.sh"' >> ~/.bashrc && \
     echo 'alias python=python3' >> ~/.bashrc && \

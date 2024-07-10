@@ -25,12 +25,6 @@
   "[django-html]": {
     "editor.defaultFormatter": "monosans.djlint"
   },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -52,7 +46,7 @@
   ],
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": [
     "javascript",
@@ -87,8 +81,14 @@
   "markdownlint.config": {
     "default": true,
     "MD013": {
-      "line_length": 80
+      "line_length": 80,
+      "code_blocks": false,
+      "tables": false
     },
-    "MD033": false
-  }
+    "MD033": false,
+    "MD041": false,
+    "MD007": { "indent": 4 },
+    "MD004": { "style": "consistent" }
+  },
+  "workbench.iconTheme": "vscode-icons"
 }

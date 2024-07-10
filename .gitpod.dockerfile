@@ -1,7 +1,8 @@
 FROM gitpod/workspace-base
 
 # Update and upgrade at the beginning
-RUN sudo apt-get update -y && sudo apt-get upgrade -y
+USER root
+RUN apt-get update -y && apt-get upgrade -y
 
 RUN echo "CI version from base"
 
@@ -11,16 +12,17 @@ ENV NODE_VERSION=16.13.0
 ENV TRIGGER_REBUILD=1
 RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | PROFILE=/dev/null bash \
     && bash -c ". .nvm/nvm.sh \
-        && nvm install $NODE_VERSION \
-        && nvm use $NODE_VERSION \
-        && nvm alias default $NODE_VERSION \
-        && npm install -g typescript yarn node-gyp" \
+    && nvm install $NODE_VERSION \
+    && nvm use $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && npm install -g typescript yarn node-gyp" \
     && echo ". ~/.nvm/nvm.sh" >> /home/gitpod/.bashrc.d/50-node
 ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
 
 ### Python ###
+USER root
+RUN apt-get install -y python3-pip
 USER gitpod
-RUN sudo apt-get install -y python3-pip
 ENV PYTHON_VERSION=3.12.2
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
@@ -33,29 +35,38 @@ RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-ins
     && pyenv global $PYTHON_VERSION \
     && python3 -m pip install --no-cache-dir --upgrade pip \
     && python3 -m pip install --no-cache-dir --upgrade \
-        setuptools wheel virtualenv pipenv pylint rope flake8 \
-        mypy autopep8 pep8 pylama pydocstyle bandit notebook \
-        twine \
+    setuptools wheel virtualenv pipenv pylint rope flake8 \
+    mypy autopep8 pep8 pylama pydocstyle bandit notebook \
+    twine \
     && sudo rm -rf /tmp/*
 ENV PYTHONUSERBASE=/workspace/.pip-modules \
     PIP_USER=yes
 ENV PATH=$PYTHONUSERBASE/bin:$PATH
 
 # Setup Heroku CLI
+USER root
 RUN curl https://cli-assets.heroku.com/install.sh | sh
 
 # Setup PostgreSQL
-RUN sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list' && \
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
-    sudo apt-get update -y && \
-    sudo apt-get install -y postgresql-12
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 \
+    && apt-get update -y \
+    && apt-get install -y postgresql-12
 
+USER gitpod
 ENV PGDATA="/workspace/.pgsql/data"
-
 RUN mkdir -p ~/.pg_ctl/bin ~/.pg_ctl/sockets \
     && echo '#!/bin/bash\n[ ! -d $PGDATA ] && mkdir -p $PGDATA && initdb --auth=trust -D $PGDATA\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" start\n' > ~/.pg_ctl/bin/pg_start \
     && echo '#!/bin/bash\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" stop\n' > ~/.pg_ctl/bin/pg_stop \
     && chmod +x ~/.pg_ctl/bin/*
+
+# Ensure .cache directory is writable
+USER root
+RUN mkdir -p /home/gitpod/.cache/Microsoft && chown -R gitpod:gitpod /home/gitpod/.cache
+
+# Install missing module
+USER gitpod
+RUN npm install -g node-ovsx-sign
 
 # ENV DATABASE_URL="postgresql://gitpod@localhost"
 # ENV PGHOSTADDR="127.0.0.1"
@@ -82,4 +93,5 @@ ENV IP="0.0.0.0"
 ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
 
 # Final update and upgrade
-RUN sudo apt-get update -y && sudo apt-get upgrade -y
+USER root
+RUN apt-get update -y && apt-get upgrade -y

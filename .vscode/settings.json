@@ -78,23 +78,6 @@
     "MD004": { "style": "consistent" }
   },
   "workbench.iconTheme": "vscode-icons",
-  "github.copilot.enable": {
-    "*": true
-  },
-  "github.copilot.advanced": {
-    "suggestionMode": "inline",
-    "autoAccept": true,
-    "showEditorCompletions": true
-  },
-  "editor.suggestSelection": "first",
-  "editor.inlineSuggest.enabled": true,
-  "editor.quickSuggestions": {
-    "other": true,
-    "comments": false,
-    "strings": true
-  },
-  "editor.suggestOnTriggerCharacters": true,
-  "editor.acceptSuggestionOnEnter": "on",
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
   "diffEditor.ignoreTrimWhitespace": false

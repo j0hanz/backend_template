@@ -12,5 +12,3 @@ vscode:
     - dbaeumer.vscode-eslint
     - bradlc.vscode-tailwindcss
     - davidanson.vscode-markdownlint
-    - GitHub.copilot
-    - GitHub.copilot-chat

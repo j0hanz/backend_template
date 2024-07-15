@@ -2,7 +2,8 @@ FROM gitpod/workspace-base
 
 # Update and upgrade at the beginning
 USER root
-RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get update -y && apt-get upgrade -y \
+    && apt-get install -y curl lsb-release
 
 # NodeJS Setup
 USER gitpod
@@ -20,25 +21,34 @@ ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
 # Python Setup
 USER root
 RUN apt-get install -y python3-pip
+
 USER gitpod
 ENV PYTHON_VERSION=3.12.2
-ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
+ENV PYENV_ROOT=$HOME/.pyenv
+ENV PATH=$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH
+
+# Install pyenv and Python version
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
-    && echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc \
+    && echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc \
+    && echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc \
     && echo 'eval "$(pyenv init --path)"' >> ~/.bashrc \
     && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
     && echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc.d/60-python \
     && pyenv update \
     && pyenv install $PYTHON_VERSION \
-    && pyenv global $PYTHON_VERSION \
-    && python3 -m pip install --no-cache-dir --upgrade pip \
+    && pyenv global $PYTHON_VERSION
+
+# Upgrade pip and install Python packages
+RUN python3 -m pip install --no-cache-dir --upgrade pip \
     && python3 -m pip install --no-cache-dir --upgrade \
     setuptools wheel virtualenv pipenv pylint rope flake8 \
     mypy autopep8 pep8 pylama pydocstyle bandit notebook djlint \
     twine \
     && sudo rm -rf /tmp/*
-ENV PYTHONUSERBASE=/workspace/.pip-modules \
-    PIP_USER=yes
+
+# Set Python user base and update PATH
+ENV PYTHONUSERBASE=/workspace/.pip-modules
+ENV PIP_USER=yes
 ENV PATH=$PYTHONUSERBASE/bin:$PATH
 
 # Setup Heroku CLI
@@ -62,13 +72,9 @@ RUN mkdir -p ~/.pg_ctl/bin ~/.pg_ctl/sockets \
 USER root
 RUN mkdir -p /home/gitpod/.cache/Microsoft && chown -R gitpod:gitpod /home/gitpod/.cache
 
-# Install node-ovsx-sign globally
-USER gitpod
-RUN npm install -g node-ovsx-sign
-
 # PostgreSQL Environment Variables
 ENV PGDATABASE="postgres"
-ENV PATH="/usr/lib/postgresql/12/bin:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin:$HOME/.pg_ctl/bin:$PATH"
+ENV PATH="/usr/lib/postgresql/12/bin:$PATH"
 
 # Add Aliases
 RUN echo 'alias run="python3 $GITPOD_REPO_ROOT/manage.py runserver 0.0.0.0:8000"' >> ~/.bashrc \
@@ -88,6 +94,7 @@ ENV IP="0.0.0.0"
 # Allow React and DRF to run together on Gitpod
 ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
 
-# Final update and upgrade
+# Final update, upgrade, and cleanup
 USER root
-RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get update -y && apt-get upgrade -y \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*

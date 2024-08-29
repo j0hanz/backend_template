@@ -1,4 +1,17 @@
 {
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.github": true,
+    "**/.gitp*": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/.vscode": true,
+    "**/core.Microsoft*": true,
+    "**/core.mongo*": true,
+    "**/core.python*": true,
+    "**/CVS": true
+  },
   // Default formatter
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
@@ -18,7 +31,6 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
   // Prettier settings
   "prettier.singleQuote": true,
   "prettier.semi": true,
@@ -28,10 +40,8 @@
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.endOfLine": "lf",
-
   // Auto-save
   "files.autoSave": "afterDelay",
-
   // Black formatter for Python
   "black-formatter.args": [
     "--line-length",
@@ -40,7 +50,6 @@
     "py311",
     "--skip-string-normalization"
   ],
-
   // ESLint settings
   "eslint.format.enable": true,
   "eslint.validate": [
@@ -52,18 +61,15 @@
   "eslint.options": {
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
-
   // Disable built-in formatters for JS/TS
   "javascript.format.enable": false,
   "typescript.format.enable": false,
-
   // CSS and Emmet settings
   "css.validate": false,
   "css.lint.unknownAtRules": "ignore",
   "emmet.includeLanguages": {
     "django-html": "html"
   },
-
   // Markdownlint settings
   "markdownlint.config": {
     "default": true,
@@ -73,13 +79,11 @@
     "MD007": { "indent": 4 },
     "MD004": { "style": "consistent" }
   },
-
   // UI and Git settings
   "workbench.iconTheme": "vscode-icons",
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
   "diffEditor.ignoreTrimWhitespace": false,
-
   // djlint settings for Django
   "djlint.maxLineLength": 80,
   "djlint.maxAttributeLength": 80,

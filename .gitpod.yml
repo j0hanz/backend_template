@@ -5,3 +5,13 @@ tasks:
   - init: . ${GITPOD_REPO_ROOT}/.vscode/init_tasks.sh
     command: /home/gitpod/.pg_ctl/bin/pg_start > /dev/null
   - command: . ${GITPOD_REPO_ROOT}/.vscode/uptime.sh &
+
+vscode:
+  extensions:
+    - esbenp.prettier-vscode
+    - ms-python.black-formatter
+    - dbaeumer.vscode-eslint
+    - monosans.djlint
+    - davidanson.vscode-markdownlint
+    - vscode-icons-team.vscode-icons
+    - ms-python.python

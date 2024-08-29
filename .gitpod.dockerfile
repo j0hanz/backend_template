@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install common dependencies
-RUN apt-get install -y curl wget gnupg
+RUN apt-get install -y curl wget gnupg software-properties-common
 
 USER gitpod
 
@@ -17,20 +17,25 @@ USER gitpod
 ENV PYENV_ROOT="/home/gitpod/.pyenv"
 ENV PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
 RUN curl -fsSL https://pyenv.run | bash && \
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc && \
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc && \
     echo 'eval "$(pyenv init --path)"' >> ~/.bashrc && \
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
     pyenv install 3.12.2 && \
     pyenv global 3.12.2 && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir pylint flake8 mypy black isort pytest coverage django djangorestframework pandas numpy psycopg2
+    pip install --no-cache-dir pylint flake8 mypy black isort pytest coverage django djangorestframework pandas numpy psycopg2 requests
 
 # NodeJS setup
 ENV NODE_VERSION=20.11.1
-ENV PATH=$PATH:/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin
-RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | PROFILE=/dev/null bash && \
-    bash -c ". .nvm/nvm.sh && nvm install $NODE_VERSION && nvm use $NODE_VERSION && nvm alias default $NODE_VERSION" && \
-    npm install -g typescript yarn node-gyp && \
-    echo ". ~/.nvm/nvm.sh" >> /home/gitpod/.bashrc.d/50-node
+ENV NVM_DIR="/home/gitpod/.nvm"
+ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
+    . "$NVM_DIR/nvm.sh" && \
+    nvm install $NODE_VERSION && \
+    nvm use $NODE_VERSION && \
+    npm install -g typescript yarn node-gyp eslint prettier node-ovsx-sign && \
+    echo ". $NVM_DIR/nvm.sh" >> /home/gitpod/.bashrc.d/50-node
 
 USER root
 
@@ -44,7 +49,7 @@ RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg -o /usr/s
 
 # PostgreSQL setup
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 && \
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update -y && \
     apt-get install -y postgresql-16
 

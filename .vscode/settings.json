@@ -1,5 +1,8 @@
 {
+  // Default formatter
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Formatters for specific languages
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
@@ -9,12 +12,14 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[django-html]": {
+  "[html][django-html][handlebars][hbs][mustache][jinja][jinja-html][nj][njk][nunjucks][twig]": {
     "editor.defaultFormatter": "monosans.djlint"
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  // Prettier settings
   "prettier.singleQuote": true,
   "prettier.semi": true,
   "prettier.trailingComma": "all",
@@ -23,7 +28,11 @@
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.endOfLine": "lf",
+
+  // Auto-save
   "files.autoSave": "afterDelay",
+
+  // Black formatter for Python
   "black-formatter.args": [
     "--line-length",
     "79",
@@ -31,10 +40,9 @@
     "py311",
     "--skip-string-normalization"
   ],
+
+  // ESLint settings
   "eslint.format.enable": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -44,41 +52,40 @@
   "eslint.options": {
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
+
+  // Disable built-in formatters for JS/TS
   "javascript.format.enable": false,
   "typescript.format.enable": false,
+
+  // CSS and Emmet settings
   "css.validate": false,
   "css.lint.unknownAtRules": "ignore",
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html",
-    "javascript": "javascript",
-    "javascriptreact": "javascriptreact",
-    "typescript": "typescript",
-    "typescriptreact": "typescriptreact"
-  },
-  "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.experimental.classRegex": [
-    "tw`([^`]*)",
-    "tw=\"([^\"]*)",
-    "tw={\"([^\"}]*)",
-    "tw\\.\\w+`([^`]*)"
-  ],
   "emmet.includeLanguages": {
     "django-html": "html"
   },
+
+  // Markdownlint settings
   "markdownlint.config": {
     "default": true,
-    "MD013": {
-      "line_length": 80,
-      "code_blocks": false,
-      "tables": false
-    },
+    "MD013": { "line_length": 80, "code_blocks": false, "tables": false },
     "MD033": false,
     "MD041": false,
     "MD007": { "indent": 4 },
     "MD004": { "style": "consistent" }
   },
+
+  // UI and Git settings
   "workbench.iconTheme": "vscode-icons",
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  // djlint settings for Django
+  "djlint.maxLineLength": 80,
+  "djlint.maxAttributeLength": 80,
+  "djlint.maxBlankLines": 1,
+  "djlint.formatAttributeTemplateTags": true,
+  "djlint.lineBreakAfterMultilineTag": true,
+  "djlint.preserveBlankLines": true,
+  "editor.inlineSuggest.suppressSuggestions": true
 }

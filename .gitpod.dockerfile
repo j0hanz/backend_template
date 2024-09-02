@@ -36,7 +36,7 @@ RUN curl -fsSL https://pyenv.run | bash && \
     pyenv install 3.12.2 && \
     pyenv global 3.12.2 && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir pylint mypy isort coverage psycopg2 requests ruff djlint pip-review pyparsing pydot && \
+    pip install --no-cache-dir pylint mypy isort coverage requests ruff djlint pip-review pyparsing pydot && \
     sudo rm -rf /tmp/*
 
 ENV PYTHONUSERBASE=/workspace/.pip-modules \

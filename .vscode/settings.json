@@ -12,7 +12,8 @@
     "**/core.mongo*": true,
     "**/core.python*": true,
     "**/CVS": true,
-    "pyproject.toml": true
+    "pyproject.toml": true,
+    ".ruff_cache": true
   },
 
   // Default formatter
@@ -82,15 +83,6 @@
   // Emmet settings
   "emmet.includeLanguages": {
     "django-html": "html"
-  },
-
-  // Additional Markdown settings
-  "markdown.preview.breaks": true,
-  "markdownlint.config": {
-    "default": true,
-    "MD003": { "style": "atx_closed" },
-    "MD007": { "indent": 4 },
-    "no-hard-tabs": false
   },
 
   // Workspace settings

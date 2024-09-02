@@ -4,7 +4,7 @@ USER root
 
 # Set environment variables
 ENV PYENV_ROOT="/home/gitpod/.pyenv"
-ENV PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
+ENV PATH="$PYENV_ROOT/bin:$PATH:$PYENV_ROOT/shims"
 ENV NODE_VERSION=20.11.1
 ENV NVM_DIR="/home/gitpod/.nvm"
 ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
@@ -13,6 +13,15 @@ ENV PGDATA="/workspace/.pgsql/data"
 # Update and install common dependencies
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y curl wget gnupg software-properties-common && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install essential development tools and libraries
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    libssl-dev \
+    libffi-dev \
+    zlib1g-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER gitpod
@@ -25,8 +34,9 @@ RUN curl -fsSL https://pyenv.run | bash && \
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
     pyenv install 3.12.2 && \
     pyenv global 3.12.2 && \
+    apt-get update && apt-get install -y graphviz && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir pylint mypy isort coverage psycopg2 requests ruff djlint pip-review && \
+    pip install --no-cache-dir pylint mypy isort coverage psycopg2 requests ruff djlint pip-review pyparsing pydot && \
     sudo rm -rf /tmp/*
 
 ENV PYTHONUSERBASE=/workspace/.pip-modules \

@@ -1,4 +1,5 @@
 {
+  // File exclusions
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
@@ -10,27 +11,42 @@
     "**/core.Microsoft*": true,
     "**/core.mongo*": true,
     "**/core.python*": true,
-    "**/CVS": true
+    "**/CVS": true,
+    "pyproject.toml": true
   },
+
   // Default formatter
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  // Formatters for specific languages
+  // Python-specific settings
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+
+  // HTML and template languages settings
   "[html][django-html][handlebars][hbs][mustache][jinja][jinja-html][nj][njk][nunjucks][twig]": {
     "editor.defaultFormatter": "monosans.djlint"
   },
+
+  // Markdown settings
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    },
+    "editor.suggestSelection": "first",
+    "editor.tabSize": 2,
+    "editor.renderWhitespace": "all",
+    "files.trimTrailingWhitespace": true
   },
+
   // Prettier settings
   "prettier.singleQuote": true,
   "prettier.semi": true,
@@ -40,16 +56,10 @@
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.endOfLine": "lf",
-  // Auto-save
+
+  // Auto-save settings
   "files.autoSave": "afterDelay",
-  // Black formatter for Python
-  "black-formatter.args": [
-    "--line-length",
-    "79",
-    "--target-version",
-    "py311",
-    "--skip-string-normalization"
-  ],
+
   // ESLint settings
   "eslint.format.enable": true,
   "eslint.validate": [
@@ -61,35 +71,32 @@
   "eslint.options": {
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
-  // Disable built-in formatters for JS/TS
+
+  // Disable built-in formatters
   "javascript.format.enable": false,
   "typescript.format.enable": false,
-  // CSS and Emmet settings
-  "css.validate": false,
+
+  // CSS settings
   "css.lint.unknownAtRules": "ignore",
+
+  // Emmet settings
   "emmet.includeLanguages": {
     "django-html": "html"
   },
-  // Markdownlint settings
+
+  // Additional Markdown settings
+  "markdown.preview.breaks": true,
   "markdownlint.config": {
     "default": true,
-    "MD013": { "line_length": 80, "code_blocks": false, "tables": false },
-    "MD033": false,
-    "MD041": false,
+    "MD003": { "style": "atx_closed" },
     "MD007": { "indent": 4 },
-    "MD004": { "style": "consistent" }
+    "no-hard-tabs": false
   },
-  // UI and Git settings
-  "workbench.iconTheme": "vscode-icons",
+
+  // Workspace settings
+  "workbench.iconTheme": "material-icon-theme",
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  // djlint settings for Django
-  "djlint.maxLineLength": 80,
-  "djlint.maxAttributeLength": 80,
-  "djlint.maxBlankLines": 1,
-  "djlint.formatAttributeTemplateTags": true,
-  "djlint.lineBreakAfterMultilineTag": true,
-  "djlint.preserveBlankLines": true,
   "editor.inlineSuggest.suppressSuggestions": true
 }

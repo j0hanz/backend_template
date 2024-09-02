@@ -3,15 +3,17 @@ image:
 
 tasks:
   - init: . ${GITPOD_REPO_ROOT}/.vscode/init_tasks.sh
-    command: /home/gitpod/.pg_ctl/bin/pg_start > /dev/null
+    command: |
+      /home/gitpod/.pg_ctl/bin/pg_start > /dev/null
+      pip3 freeze > requirements.txt
+  - name: Install VS Code Extensions
+    command: |
+      for file in /workspace/backend_template/.vscode/extensions/*.vsix; do
+        code --install-extension "$file"
+      done
   - command: . ${GITPOD_REPO_ROOT}/.vscode/uptime.sh &
 
 vscode:
   extensions:
-    - esbenp.prettier-vscode
-    - ms-python.black-formatter
-    - dbaeumer.vscode-eslint
-    - monosans.djlint
-    - davidanson.vscode-markdownlint
-    - vscode-icons-team.vscode-icons
-    - ms-python.python
+    - PKief.material-icon-theme
+    - charliermarsh.ruff

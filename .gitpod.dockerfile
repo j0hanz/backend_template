@@ -23,8 +23,8 @@ RUN curl -fsSL https://pyenv.run | bash && \
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
     pyenv install 3.12.2 && \
     pyenv global 3.12.2 && \
-    pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir pylint mypy isort pytest coverage psycopg2 requests ruff djlint pip-review
+    pip install --no-cache-dir --upgrade pip \
+    pip install --no-cache-dir setuptools wheel pylint mypy isort coverage psycopg2 requests ruff djlint pip-review
 
 # NodeJS setup
 ENV NODE_VERSION=20.11.1

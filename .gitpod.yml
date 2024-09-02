@@ -17,3 +17,4 @@ vscode:
   extensions:
     - PKief.material-icon-theme
     - charliermarsh.ruff
+    - ms-python.python

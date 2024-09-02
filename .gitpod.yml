@@ -8,7 +8,7 @@ tasks:
       pip3 freeze > requirements.txt
   - name: Install VS Code Extensions
     command: |
-      for file in /workspace/backend_template/.vscode/extensions/*.vsix; do
+      for file in .vscode/extensions/*.vsix; do
         code --install-extension "$file"
       done
   - command: . ${GITPOD_REPO_ROOT}/.vscode/uptime.sh &

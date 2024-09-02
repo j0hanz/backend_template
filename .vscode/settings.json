@@ -22,8 +22,8 @@
   // Python-specific settings
   "[python]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.organizeImports": "explicit"
+      "source.fixAll": true,
+      "source.organizeImports": true
     },
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
@@ -90,5 +90,8 @@
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  "editor.inlineSuggest.suppressSuggestions": true
+  "editor.inlineSuggest.suppressSuggestions": true,
+  
+  // Auto-update extensions
+  "extensions.autoUpdate": true
 }

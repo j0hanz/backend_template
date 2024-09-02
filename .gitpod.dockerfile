@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libssl-dev \
     libffi-dev \
-    zlib1g-dev && \
+    zlib1g-dev \
+    graphviz && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER gitpod
@@ -34,7 +35,6 @@ RUN curl -fsSL https://pyenv.run | bash && \
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
     pyenv install 3.12.2 && \
     pyenv global 3.12.2 && \
-    apt-get update && apt-get install -y graphviz && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir pylint mypy isort coverage psycopg2 requests ruff djlint pip-review pyparsing pydot && \
     sudo rm -rf /tmp/*

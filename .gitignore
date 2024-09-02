@@ -10,4 +10,3 @@ cloudinary_python.txt
 db.sqlite3
 /staticfiles/
 .ruff_cache
-pyproject.toml

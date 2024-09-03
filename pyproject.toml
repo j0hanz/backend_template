@@ -55,6 +55,7 @@ select = [
     "F",
     "DJ",
     "Q",
+    "I",
 ]
 
 [tool.ruff.lint.flake8-quotes]

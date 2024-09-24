@@ -1,13 +1,16 @@
 [tool.djlint]
-ignore = "H014,H015"
-profile = "django"
-indent = 4
-line_break_after_multiline_tag = true
-max_line_length = 100
-use_gitignore = true
-max_attribute_length = 0
+blank_line_after_tag = "load,extends,include,endblock"
+close_void_tags = true
 format_attribute_template_tags = true
+ignore = "H014,H015,H006"
+indent = 2
+line_break_after_multiline_tag = true
+max_attribute_length = 0
+max_blank_lines = 0
+max_line_length = 100
 preserve_blank_lines = true
+profile = "django"
+use_gitignore = true
 
 [tool.ruff]
 exclude = [

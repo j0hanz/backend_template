@@ -2,16 +2,21 @@ image:
   file: .gitpod.dockerfile
 
 tasks:
-  - init: . ${GITPOD_REPO_ROOT}/.vscode/init_tasks.sh
+  - init: |
+      . ${GITPOD_REPO_ROOT}/.vscode/init_tasks.sh
     command: |
       /home/gitpod/.pg_ctl/bin/pg_start > /dev/null
-      pip3 freeze > requirements.txt
+      pip install -r requirements.txt
+
   - name: Install VS Code Extensions
     command: |
       for file in .vscode/extensions/*.vsix; do
-        code --install-extension "$file"
+        code --install-extension "$file" || true
       done
-  - command: . ${GITPOD_REPO_ROOT}/.vscode/uptime.sh &
+
+  - name: Start Uptime Script
+    command: |
+      . ${GITPOD_REPO_ROOT}/.vscode/uptime.sh &
 
 vscode:
   extensions:

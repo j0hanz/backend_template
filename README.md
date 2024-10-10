@@ -11,8 +11,8 @@ This repository provides a simple Gitpod workspace template pre-configured for *
   - PostgreSQL 16
   - MongoDB Shell (`mongosh`)
 - **Linters and Formatters**:
-  - **Ruff**: Fast Python linter.
-  - **Djlint**: Linter and formatter for Django templates.
+  - **Ruff**: Fast Python linter. [Documentation](https://docs.astral.sh/ruff/configuration/)
+  - **Djlint**: Linter and formatter for Django templates. [Documentation](https://www.djlint.com/docs/configuration/)
 - **VS Code Extensions**: Pre-installed extensions for enhanced development.
 
 ---
@@ -35,7 +35,7 @@ The workspace will automatically set up your development environment, including 
 
 ### Ruff
 
-Ruff is a fast Python linter that helps you maintain code quality.
+Ruff is a fast Python linter that helps you maintain code quality. For detailed configuration options, refer to the [Ruff Documentation](https://docs.astral.sh/ruff/configuration/).
 
 #### Linting Code with Ruff
 
@@ -57,7 +57,7 @@ ruff check path/to/your/code --fix
 
 ### Djlint
 
-Djlint is a tool for linting and formatting Django templates.
+Djlint is a tool for linting and formatting Django templates. For detailed configuration, see the [Djlint Documentation](https://www.djlint.com/docs/configuration/).
 
 #### Linting Templates
 
@@ -97,6 +97,8 @@ Stop PostgreSQL:
 
 - **Update Python or Node.js Versions**: Modify `PYTHON_VERSION` or `NODE_VERSION` in `.gitpod.dockerfile`.
 - **Adjust Linting Rules**: Edit `pyproject.toml` to change settings for Ruff and Djlint.
+  - **Ruff Configuration**: See the [Ruff Documentation](https://docs.astral.sh/ruff/configuration/) for available options.
+  - **Djlint Configuration**: Refer to the [Djlint Documentation](https://www.djlint.com/docs/configuration/) for configuration details.
 - **Add VS Code Extensions**: Update the `extensions` list in `.gitpod.yml`.
 
 ---

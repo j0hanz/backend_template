@@ -33,30 +33,29 @@ USER gitpod
 
 # Python setup
 RUN curl -fsSL https://pyenv.run | bash && \
-    export PYENV_ROOT="$HOME/.pyenv" && \
-    export PATH="$PYENV_ROOT/bin:$PATH" && \
-    export PATH="$PYENV_ROOT/shims:$PATH" && \
-    eval "$(pyenv init --path)" && \
-    eval "$(pyenv virtualenv-init -)" && \
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc && \
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc && \
+    echo 'eval "$(pyenv init --path)"' >> ~/.bashrc && \
+    echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
     pyenv install 3.13.0 && \
     pyenv global 3.13.0 && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir \
-        bandit \
-        coverage \
-        djlint \
-        ipython \
-        isort \
-        mypy \
-        pip-review \
-        pylint \
-        pyparsing \
-        pydot \
-        pytest \
-        pytest-django \
-        requests \
-        ruff && \
-    rm -rf /tmp/*
+    bandit \
+    coverage \
+    djlint \
+    ipython \
+    isort \
+    mypy \
+    pip-review \
+    pylint \
+    pyparsing \
+    pydot \
+    pytest \
+    pytest-django \
+    requests \
+    ruff && \
+    sudo rm -rf /tmp/*
 
 # NodeJS setup
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \

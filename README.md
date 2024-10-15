@@ -5,7 +5,7 @@ This repository provides a simple Gitpod workspace template pre-configured for *
 ## Features
 
 - **Django Ready**: Quickly start building Django applications.
-- **Python Environment**: Python 3.12.2 managed via Pyenv.
+- **Python Environment**: Python 3.12.3 managed via Pyenv.
 - **Node.js Environment**: Node.js 20.11.1 managed via NVM.
 - **Databases**:
   - PostgreSQL 16

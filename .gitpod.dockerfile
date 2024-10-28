@@ -5,7 +5,7 @@ USER root
 # Set environment variables
 ENV PYENV_ROOT="/home/gitpod/.pyenv"
 ENV PATH="$PYENV_ROOT/bin:$PATH:$PYENV_ROOT/shims"
-ENV NODE_VERSION=20.11.1
+ENV NODE_VERSION=20.18.0
 ENV NVM_DIR="/home/gitpod/.nvm"
 ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
 ENV PGDATA="/workspace/.pgsql/data"
@@ -33,6 +33,7 @@ RUN curl -fsSL https://pyenv.run | bash && \
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc && \
     echo 'eval "$(pyenv init --path)"' >> ~/.bashrc && \
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
+    pyenv install 3.12.7 && \
     pyenv install 3.13.0 && \
     pyenv global 3.13.0 && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \

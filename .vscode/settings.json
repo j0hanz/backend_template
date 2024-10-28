@@ -1,4 +1,18 @@
 {
+  // Editor Settings
+  "editor.autoClosingBrackets": "always",
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "editor.suggestSelection": "recentlyUsedByPrefix",
+  "editor.tabCompletion": "on",
+  "editor.wordWrap": "on",
+  "editor.fontFamily": "Fira Code, Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+
+  // Terminal Settings
+  "terminal.integrated.fontSize": 16,
+
+  // Auto-save
+  "files.autoSave": "afterDelay",
   // File exclusions
   "files.exclude": {
     "**/.DS_Store": true,
@@ -35,7 +49,7 @@
 
   // Markdown settings
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.wordWrap": "on",
     "editor.quickSuggestions": {
       "comments": "on",
@@ -57,9 +71,6 @@
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.endOfLine": "lf",
-
-  // Auto-save settings
-  "files.autoSave": "afterDelay",
 
   // ESLint settings
   "eslint.format.enable": true,
@@ -89,6 +100,5 @@
   "workbench.iconTheme": "material-icon-theme",
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "editor.inlineSuggest.suppressSuggestions": true
+  "diffEditor.ignoreTrimWhitespace": false
 }

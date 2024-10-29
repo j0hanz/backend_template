@@ -50,7 +50,9 @@ RUN curl -fsSL https://pyenv.run | bash && \
     pydot \
     pytest \
     pytest-django \
+    pytest-cov \
     requests \
+    watchdog \
     ruff && \
     sudo rm -rf /tmp/*
 

@@ -27,7 +27,10 @@
     "**/core.python*": true,
     "**/CVS": true,
     "pyproject.toml": true,
-    ".ruff_cache": true
+    ".ruff_cache": true,
+    ".pytest_cache": true,
+    ".coverage": true,
+    "Makefile": true
   },
 
   // Default formatter
@@ -100,5 +103,6 @@
   "workbench.iconTheme": "material-icon-theme",
   "git.autofetch": true,
   "explorer.confirmDragAndDrop": false,
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.fontSize": 16,
 }

@@ -48,6 +48,8 @@ ignore = [
     "Q001",
     "Q003",
     "F401",
+    "DJ001",
+    "PLR",
 ]
 select = [
     "E4",
@@ -57,6 +59,8 @@ select = [
     "DJ",
     "Q",
     "I",
+    "UP",
+    "PL",
 ]
 
 [tool.ruff.lint.flake8-quotes]

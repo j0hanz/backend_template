@@ -17,7 +17,6 @@ vscode:
     - charliermarsh.ruff
     - ms-python.python
     - batisteo.vscode-django
-    - streetsidesoftware.code-spell-checker
     - esbenp.prettier-vscode
     - eamodio.gitlens
     - mhutchie.git-graph
@@ -25,5 +24,4 @@ vscode:
     - formulahendry.auto-close-tag
     - formulahendry.auto-rename-tag
     - christian-kohler.path-intellisense
-    - aaron-bond.better-comments
     - yzhang.markdown-all-in-one

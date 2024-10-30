@@ -76,19 +76,14 @@ RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg -o /usr/s
     apt-get update && apt-get install -y mongodb-mongosh && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# PostgreSQL setup
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
-    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    apt-get update && apt-get install -y postgresql-16 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER gitpod
-
 # PostgreSQL configuration
 RUN mkdir -p ~/.pg_ctl/bin ~/.pg_ctl/sockets && \
     echo '#!/bin/bash\n[ ! -d $PGDATA ] && mkdir -p $PGDATA && initdb --auth=trust -D $PGDATA\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" start' > ~/.pg_ctl/bin/pg_start && \
     echo '#!/bin/bash\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" stop' > ~/.pg_ctl/bin/pg_stop && \
     chmod +x ~/.pg_ctl/bin/*
+
+# Health checks
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD pg_isready -U postgres || exit 1
 
 # Install Heroku CLI
 RUN curl https://cli-assets.heroku.com/install.sh | sh

@@ -91,3 +91,7 @@ USER root
 
 # Final cleanup
 RUN apt-get autoremove -y && apt-get clean -y
+
+# Allow React and DRF to run together on Gitpod
+ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
+

@@ -35,7 +35,7 @@ RUN curl -fsSL https://pyenv.run | bash && \
     echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc && \
     pyenv install 3.12.7 && \
     pyenv install 3.13.0 && \
-    pyenv global 3.13.0 && \
+    pyenv global 3.12.7 && \
     pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir \
     bandit \

@@ -3,6 +3,12 @@ image:
 
 tasks:
   - name: Setup Environment
+    before: |
+      if [ -f requirements.txt ]; then
+        pip install -r requirements.txt
+      else
+        echo "requirements.txt not found, skipping pip install."
+      fi
     command: |
       if [ -d ".vscode/extensions" ] && [ "$(ls -A .vscode/extensions/*.vsix 2>/dev/null)" ]; then
         for file in .vscode/extensions/*.vsix; do
@@ -10,12 +16,6 @@ tasks:
         done
       else
         echo "No .vsix extensions found to install."
-      fi
-
-      if [ -f requirements.txt ]; then
-        pip install -r requirements.txt
-      else
-        echo "requirements.txt not found, skipping pip install."
       fi
 
 vscode:

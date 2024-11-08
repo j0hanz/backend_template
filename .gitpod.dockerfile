@@ -1,7 +1,5 @@
 FROM gitpod/workspace-base
 
-USER root
-
 # Set environment variables
 ENV PYENV_ROOT="/home/gitpod/.pyenv"
 ENV PATH="$PYENV_ROOT/bin:$PATH:$PYENV_ROOT/shims"
@@ -11,21 +9,19 @@ ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
 ENV PGDATA="/workspace/.pgsql/data"
 
 # Update and install common dependencies
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y curl wget gnupg software-properties-common && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN sudo apt-get update && sudo apt-get upgrade -y && \
+    sudo apt-get install -y curl wget gnupg software-properties-common && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # Install essential development tools and libraries
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && sudo apt-get install -y \
     build-essential \
     libpq-dev \
     libssl-dev \
     libffi-dev \
     zlib1g-dev \
     graphviz && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER gitpod
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # Python setup
 RUN curl -fsSL https://pyenv.run | bash && \
@@ -67,31 +63,20 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     npm install -g typescript yarn node-gyp eslint prettier node-ovsx-sign && \
     echo ". $NVM_DIR/nvm.sh" >> /home/gitpod/.bashrc.d/50-node
 
-USER root
-
 # MongoDB setup
-RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor && \
-    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-7.0.list && \
-    apt-get update && apt-get install -y mongodb-mongosh && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN sudo curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor && \
+    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list && \
+    sudo apt-get update && sudo apt-get install -y mongodb-mongosh && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # PostgreSQL configuration
 RUN mkdir -p ~/.pg_ctl/bin ~/.pg_ctl/sockets && \
-    echo '#!/bin/bash\n[ ! -d $PGDATA ] && mkdir -p $PGDATA && initdb --auth=trust -D $PGDATA\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" start' > ~/.pg_ctl/bin/pg_start && \
-    echo '#!/bin/bash\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" stop' > ~/.pg_ctl/bin/pg_stop && \
+    echo '#!/bin/bash\n[ ! -d $PGDATA ] && mkdir -p $PGDATA && sudo initdb --auth=trust -D $PGDATA\nsudo pg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" start' > ~/.pg_ctl/bin/pg_start && \
+    echo '#!/bin/bash\nsudo pg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" stop' > ~/.pg_ctl/bin/pg_stop && \
     chmod +x ~/.pg_ctl/bin/*
 
-# Health checks
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD pg_isready -U postgres || exit 1
-
 # Install Heroku CLI
-RUN curl https://cli-assets.heroku.com/install.sh | sh
-
-USER root
-
-# Final cleanup
-RUN apt-get autoremove -y && apt-get clean -y
+RUN sudo curl https://cli-assets.heroku.com/install.sh | sh
 
 # Allow React and DRF to run together on Gitpod
 ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
-

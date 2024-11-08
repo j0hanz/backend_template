@@ -1,4 +1,4 @@
-FROM gitpod/workspace-base
+FROM gitpod/workspace-base:2024-10-31-10-31-39
 
 # Set environment variables
 ENV PYENV_ROOT="/home/gitpod/.pyenv"

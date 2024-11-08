@@ -2,10 +2,16 @@ image:
   file: .gitpod.dockerfile
 tasks:
   - init: |
-      echo "Initializing Gitpod workspace..."
-      for file in .vscode/extensions/*.vsix; do
-        code --install-extension "$file"
-      done
+      echo "Installing VS Code extensions from .vsix files..."
+      if [ -d "/home/gitpod/.vscode/extensions" ] && [ "$(ls -A /home/gitpod/.vscode/extensions/*.vsix 2>/dev/null)" ]; then
+        for file in /home/gitpod/.vscode/extensions/*.vsix; do
+          echo "Installing extension: $file"
+          code --install-extension "$file" || echo "Failed to install $file"
+        done
+        echo "All .vsix extensions installed."
+      else
+        echo "No .vsix files found. Skipping installation."
+      fi
       echo "Setup complete."
 vscode:
   extensions:
@@ -13,6 +19,9 @@ vscode:
     - PKief.material-icon-theme
     - charliermarsh.ruff
     - ms-python.python
+    - ms-toolsai.jupyter
+    - ms-toolsai.jupyter-keymap
+    - batisteo.vscode-django
     - esbenp.prettier-vscode
     - christian-kohler.path-intellisense
     - yzhang.markdown-all-in-one

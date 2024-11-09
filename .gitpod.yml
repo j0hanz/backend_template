@@ -1,18 +1,18 @@
 image:
   file: .gitpod.dockerfile
+
 tasks:
-  - init: |
-      echo "Installing VS Code extensions from .vsix files..."
-      if [ -d "/home/gitpod/.vscode/extensions" ] && [ "$(ls -A /home/gitpod/.vscode/extensions/*.vsix 2>/dev/null)" ]; then
-        for file in /home/gitpod/.vscode/extensions/*.vsix; do
-          echo "Installing extension: $file"
-          code --install-extension "$file" || echo "Failed to install $file"
-        done
-        echo "All .vsix extensions installed."
-      else
-        echo "No .vsix files found. Skipping installation."
-      fi
-      echo "Setup complete."
+  - init: . ${GITPOD_REPO_ROOT}/.vscode/init_tasks.sh
+    command: |
+      /home/gitpod/.pg_ctl/bin/pg_start > /dev/null
+      pip3 freeze > requirements.txt
+  - name: Install VS Code Extensions
+    command: |
+      for file in .vscode/extensions/*.vsix; do
+        code --install-extension "$file"
+      done
+  - command: . ${GITPOD_REPO_ROOT}/.vscode/uptime.sh &
+
 vscode:
   extensions:
     - ms-python.debugpy
